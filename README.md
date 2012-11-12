@@ -28,3 +28,6 @@ Ok, I'm glad, but how to use it? Let's see the next guts-shaking chapter :
      
         }
     }
+    
+### Conclusion
+Oh Lord, it's tremendously impressive.
