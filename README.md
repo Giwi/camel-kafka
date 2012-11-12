@@ -14,7 +14,7 @@ Ok, I'm glad, but how to use it? Let's see the next guts-shaking chapter :
 
 
 ### The hard way :
-    import org.apache.camel.builder.RouteBuilder;
+    import org.apache.camel.builder.RouteBuilder; 
     
     public class KafkaTestDrive extends RouteBuilder {
     
