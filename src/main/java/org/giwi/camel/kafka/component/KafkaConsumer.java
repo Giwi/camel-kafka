@@ -37,7 +37,7 @@ public class KafkaConsumer extends DefaultConsumer {
 
 		final String topic = endpoint.getTopicName();
 		final Properties props = new Properties();
-		props.put("zk.connect", ((KafkaComponent) endpoint.getComponent()).getZkConnect());
+		props.put("zk.connect", endpoint.getZkConnect());
 		props.put("groupid", endpoint.getGroupId());
 
 		final ConsumerConfig config = new ConsumerConfig(props);

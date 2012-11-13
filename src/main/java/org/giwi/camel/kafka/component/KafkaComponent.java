@@ -19,7 +19,6 @@ public class KafkaComponent extends DefaultComponent {
 	 */
 	public static String TOPIC_NAME = "topicNameHeader";
 	private Map<String, Object> parameters;
-	private String zkConnect;
 
 	public KafkaComponent() {
 	}
@@ -49,13 +48,6 @@ public class KafkaComponent extends DefaultComponent {
 	}
 
 	/**
-	 * @return the zkConnect
-	 */
-	public String getZkConnect() {
-		return zkConnect;
-	}
-
-	/**
 	 * @param parameters
 	 *            the parameters to set
 	 */
@@ -63,11 +55,4 @@ public class KafkaComponent extends DefaultComponent {
 		this.parameters = parameters;
 	}
 
-	/**
-	 * @param zkConnect
-	 *            the zkConnect to set
-	 */
-	public void setZkConnect(final String zkConnect) {
-		this.zkConnect = zkConnect;
-	}
 }

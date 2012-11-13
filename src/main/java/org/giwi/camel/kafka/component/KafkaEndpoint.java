@@ -19,6 +19,7 @@ import org.apache.camel.impl.DefaultPollingEndpoint;
 public class KafkaEndpoint extends DefaultPollingEndpoint {
 	private String groupId;
 	private String topicName;
+	private String zkConnect;
 	private int concurrentConsumers = 1;
 
 	/**
@@ -100,6 +101,14 @@ public class KafkaEndpoint extends DefaultPollingEndpoint {
 	 */
 	public boolean isSingleton() {
 		return true;
+	}
+
+	public String getZkConnect() {
+		return zkConnect;
+	}
+
+	public void setZkConnect(String zkConnect) {
+		this.zkConnect = zkConnect;
 	}
 
 }

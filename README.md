@@ -21,7 +21,9 @@ Ok, I'm glad, but how to use it? Let's see the next guts-shaking chapter :
         @Override
         public void configure() throws Exception {
             // go !
-            from("timer://foo?fixedRate=true&period=5000").setBody(constant("hello from Giwi Softwares")).to("kafka:TOPIC-TEST");
+            from("timer://foo?fixedRate=true&period=5000")
+                .setBody(constant("hello from Giwi Softwares"))
+                .to("kafka:TOPIC-TEST");
      
             // Recieving
             from("kafka:TOPIC-TEST?groupId=camelTest").log("${body}");

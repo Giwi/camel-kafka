@@ -32,8 +32,9 @@ public class KafkaProducer extends DefaultProducer {
 		super(endpoint);
 		this.endpoint = endpoint;
 		final Properties props = new Properties();
-		props.put("zk.connect", ((KafkaComponent) endpoint.getComponent()).getZkConnect());
-
+		props.put("zk.connect", endpoint.getZkConnect());
+		props.put("producer.type", "async");
+		props.put("compression.codec", "2");
 		// TODO: Accept all kafka parameters
 		// final Map<String, Object> params = ((KafkaComponent) endpoint.getComponent()).getParameters();
 
