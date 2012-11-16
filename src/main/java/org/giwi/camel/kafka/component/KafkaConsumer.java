@@ -44,7 +44,7 @@ public class KafkaConsumer extends DefaultConsumer {
 		props.put("fetch.size", endpoint.getFetchSize());
 		props.put("backoff.increment.ms", endpoint.getBackoffIncrementMs());
 		props.put("queuedchunks.max", endpoint.getQueuedchunksMax());
-		props.put("autocommit.enable", endpoint.isAutocommitEnable());
+		props.put("autocommit.enable", endpoint.getAutocommitEnable());
 		props.put("autocommit.interval.ms", endpoint.getAutocommitIntervalMs());
 		props.put("autooffset.reset", endpoint.getAutooffsetReset());
 		props.put("consumer.timeout.ms", endpoint.getConsumerTimeoutMs());

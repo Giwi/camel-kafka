@@ -21,37 +21,37 @@ public class KafkaEndpoint extends DefaultPollingEndpoint {
 	private String topicName;
 	private String zkConnect;
 	private int concurrentConsumers = 1;
-	private int socketTimeoutMs = 30000;
-	private int socketBuffersize = 64 * 1024;
-	private int fetchSize = 300 * 1024;
-	private int backoffIncrementMs = 1000;
-	private int queuedchunksMax = 100;
-	private boolean autocommitEnable = true;
-	private int autocommitIntervalMs = 10000;
+	private String socketTimeoutMs = "30000";
+	private String socketBuffersize = "65536";
+	private String fetchSize = "307200";
+	private String backoffIncrementMs = "1000";
+	private String queuedchunksMax = "100";
+	private String autocommitEnable = "true";
+	private String autocommitIntervalMs = "10000";
 	private String autooffsetReset = "smallest";
-	private int consumerTimeoutMs = -1;
-	private int rebalanceRetriesMax = 4;
+	private String consumerTimeoutMs = "-1";
+	private String rebalanceRetriesMax = "4";
 	private String mirrorTopicsWhitelist = "";
 	private String mirrorTopicsBlacklist = "";
-	private int mirrorConsumerNumthreads = 4;
-	private String serializerClass = null;
-	private String partitionerClass = null;
+	private String mirrorConsumerNumthreads = "4";
+	private String serializerClass = "";
+	private String partitionerClass = "";
 	private String producerType = "sync";
-	private String brokerList = null;
-	private int bufferSize = 102400;
-	private int connectTimeoutMs = 5000;
-	private int reconnectInterval = 30000;
-	private int maxMessageSize = 1000000;
-	private int compressionCodec = 0;
-	private String compressedTopics = null;
-	private int zkReadNumRetries = 3;
-	private int queueTime = 5000;
-	private int queueSize = 10000;
-	private int batchSize = 200;
-	private String eventHandler = null;
-	private String eventHandlerProps = null;
-	private String callbackHandler = null;
-	private String callbackHandlerProps = null;
+	private String brokerList = "";
+	private String bufferSize = "102400";
+	private String connectTimeoutMs = "5000";
+	private String reconnectInterval = "30000";
+	private String maxMessageSize = "1000000";
+	private String compressionCodec = "0";
+	private String compressedTopics = "";
+	private String zkReadNumRetries = "3";
+	private String queueTime = "5000";
+	private String queueSize = "10000";
+	private String batchSize = "200";
+	private String eventHandler = "";
+	private String eventHandlerProps = "";
+	private String callbackHandler = "";
+	private String callbackHandlerProps = "";
 
 	/**
 	 * @param uri
@@ -59,14 +59,14 @@ public class KafkaEndpoint extends DefaultPollingEndpoint {
 	 * @param component
 	 *            THE comonent
 	 */
-	public KafkaEndpoint(final String endPointURI, final KafkaComponent component, final URI httpURI) throws URISyntaxException {
-		super(endPointURI, component);
+	public KafkaEndpoint(final String endPoStringURI, final KafkaComponent component, final URI httpURI) throws URISyntaxException {
+		super(endPoStringURI, component);
 		topicName = httpURI.getHost();
 	}
 
 	/*
 	 * (non-Javadoc)
-	 * @see org.apache.camel.Endpoint#createConsumer(org.apache.camel.Processor)
+	 * @see org.apache.camel.EndpoString#createConsumer(org.apache.camel.Processor)
 	 */
 	@Override
 	public Consumer createConsumer(final Processor processor) throws Exception {
@@ -120,7 +120,7 @@ public class KafkaEndpoint extends DefaultPollingEndpoint {
 
 	/*
 	 * (non-Javadoc)
-	 * @see org.apache.camel.Endpoint#createProducer()
+	 * @see org.apache.camel.EndpoString#createProducer()
 	 */
 	@Override
 	public Producer createProducer() throws Exception {
@@ -147,7 +147,7 @@ public class KafkaEndpoint extends DefaultPollingEndpoint {
 	/**
 	 * @return the socketTimeoutMs
 	 */
-	public int getSocketTimeoutMs() {
+	public String getSocketTimeoutMs() {
 		return socketTimeoutMs;
 	}
 
@@ -155,14 +155,14 @@ public class KafkaEndpoint extends DefaultPollingEndpoint {
 	 * @param socketTimeoutMs
 	 *            the socketTimeoutMs to set
 	 */
-	public void setSocketTimeoutMs(int socketTimeoutMs) {
+	public void setSocketTimeoutMs(String socketTimeoutMs) {
 		this.socketTimeoutMs = socketTimeoutMs;
 	}
 
 	/**
 	 * @return the socketBuffersize
 	 */
-	public int getSocketBuffersize() {
+	public String getSocketBuffersize() {
 		return socketBuffersize;
 	}
 
@@ -170,14 +170,14 @@ public class KafkaEndpoint extends DefaultPollingEndpoint {
 	 * @param socketBuffersize
 	 *            the socketBuffersize to set
 	 */
-	public void setSocketBuffersize(int socketBuffersize) {
+	public void setSocketBuffersize(String socketBuffersize) {
 		this.socketBuffersize = socketBuffersize;
 	}
 
 	/**
 	 * @return the fetchSize
 	 */
-	public int getFetchSize() {
+	public String getFetchSize() {
 		return fetchSize;
 	}
 
@@ -185,14 +185,14 @@ public class KafkaEndpoint extends DefaultPollingEndpoint {
 	 * @param fetchSize
 	 *            the fetchSize to set
 	 */
-	public void setFetchSize(int fetchSize) {
+	public void setFetchSize(String fetchSize) {
 		this.fetchSize = fetchSize;
 	}
 
 	/**
 	 * @return the backoffIncrementMs
 	 */
-	public int getBackoffIncrementMs() {
+	public String getBackoffIncrementMs() {
 		return backoffIncrementMs;
 	}
 
@@ -200,14 +200,14 @@ public class KafkaEndpoint extends DefaultPollingEndpoint {
 	 * @param backoffIncrementMs
 	 *            the backoffIncrementMs to set
 	 */
-	public void setBackoffIncrementMs(int backoffIncrementMs) {
+	public void setBackoffIncrementMs(String backoffIncrementMs) {
 		this.backoffIncrementMs = backoffIncrementMs;
 	}
 
 	/**
 	 * @return the queuedchunksMax
 	 */
-	public int getQueuedchunksMax() {
+	public String getQueuedchunksMax() {
 		return queuedchunksMax;
 	}
 
@@ -215,29 +215,14 @@ public class KafkaEndpoint extends DefaultPollingEndpoint {
 	 * @param queuedchunksMax
 	 *            the queuedchunksMax to set
 	 */
-	public void setQueuedchunksMax(int queuedchunksMax) {
+	public void setQueuedchunksMax(String queuedchunksMax) {
 		this.queuedchunksMax = queuedchunksMax;
-	}
-
-	/**
-	 * @return the autocommitEnable
-	 */
-	public boolean isAutocommitEnable() {
-		return autocommitEnable;
-	}
-
-	/**
-	 * @param autocommitEnable
-	 *            the autocommitEnable to set
-	 */
-	public void setAutocommitEnable(boolean autocommitEnable) {
-		this.autocommitEnable = autocommitEnable;
 	}
 
 	/**
 	 * @return the autocommitIntervalMs
 	 */
-	public int getAutocommitIntervalMs() {
+	public String getAutocommitIntervalMs() {
 		return autocommitIntervalMs;
 	}
 
@@ -245,7 +230,7 @@ public class KafkaEndpoint extends DefaultPollingEndpoint {
 	 * @param autocommitIntervalMs
 	 *            the autocommitIntervalMs to set
 	 */
-	public void setAutocommitIntervalMs(int autocommitIntervalMs) {
+	public void setAutocommitStringervalMs(String autocommitIntervalMs) {
 		this.autocommitIntervalMs = autocommitIntervalMs;
 	}
 
@@ -267,7 +252,7 @@ public class KafkaEndpoint extends DefaultPollingEndpoint {
 	/**
 	 * @return the consumerTimeoutMs
 	 */
-	public int getConsumerTimeoutMs() {
+	public String getConsumerTimeoutMs() {
 		return consumerTimeoutMs;
 	}
 
@@ -275,14 +260,14 @@ public class KafkaEndpoint extends DefaultPollingEndpoint {
 	 * @param consumerTimeoutMs
 	 *            the consumerTimeoutMs to set
 	 */
-	public void setConsumerTimeoutMs(int consumerTimeoutMs) {
+	public void setConsumerTimeoutMs(String consumerTimeoutMs) {
 		this.consumerTimeoutMs = consumerTimeoutMs;
 	}
 
 	/**
 	 * @return the rebalanceRetriesMax
 	 */
-	public int getRebalanceRetriesMax() {
+	public String getRebalanceRetriesMax() {
 		return rebalanceRetriesMax;
 	}
 
@@ -290,7 +275,7 @@ public class KafkaEndpoint extends DefaultPollingEndpoint {
 	 * @param rebalanceRetriesMax
 	 *            the rebalanceRetriesMax to set
 	 */
-	public void setRebalanceRetriesMax(int rebalanceRetriesMax) {
+	public void setRebalanceRetriesMax(String rebalanceRetriesMax) {
 		this.rebalanceRetriesMax = rebalanceRetriesMax;
 	}
 
@@ -327,7 +312,7 @@ public class KafkaEndpoint extends DefaultPollingEndpoint {
 	/**
 	 * @return the mirrorConsumerNumthreads
 	 */
-	public int getMirrorConsumerNumthreads() {
+	public String getMirrorConsumerNumthreads() {
 		return mirrorConsumerNumthreads;
 	}
 
@@ -335,7 +320,7 @@ public class KafkaEndpoint extends DefaultPollingEndpoint {
 	 * @param mirrorConsumerNumthreads
 	 *            the mirrorConsumerNumthreads to set
 	 */
-	public void setMirrorConsumerNumthreads(int mirrorConsumerNumthreads) {
+	public void setMirrorConsumerNumthreads(String mirrorConsumerNumthreads) {
 		this.mirrorConsumerNumthreads = mirrorConsumerNumthreads;
 	}
 
@@ -402,7 +387,7 @@ public class KafkaEndpoint extends DefaultPollingEndpoint {
 	/**
 	 * @return the bufferSize
 	 */
-	public int getBufferSize() {
+	public String getBufferSize() {
 		return bufferSize;
 	}
 
@@ -410,14 +395,14 @@ public class KafkaEndpoint extends DefaultPollingEndpoint {
 	 * @param bufferSize
 	 *            the bufferSize to set
 	 */
-	public void setBufferSize(int bufferSize) {
+	public void setBufferSize(String bufferSize) {
 		this.bufferSize = bufferSize;
 	}
 
 	/**
 	 * @return the connectTimeoutMs
 	 */
-	public int getConnectTimeoutMs() {
+	public String getConnectTimeoutMs() {
 		return connectTimeoutMs;
 	}
 
@@ -425,29 +410,29 @@ public class KafkaEndpoint extends DefaultPollingEndpoint {
 	 * @param connectTimeoutMs
 	 *            the connectTimeoutMs to set
 	 */
-	public void setConnectTimeoutMs(int connectTimeoutMs) {
+	public void setConnectTimeoutMs(String connectTimeoutMs) {
 		this.connectTimeoutMs = connectTimeoutMs;
 	}
 
 	/**
 	 * @return the reconnectInterval
 	 */
-	public int getReconnectInterval() {
+	public String getReconnectInterval() {
 		return reconnectInterval;
 	}
 
 	/**
-	 * @param reconnectInterval
+	 * @param reconnectStringerval
 	 *            the reconnectInterval to set
 	 */
-	public void setReconnectInterval(int reconnectInterval) {
+	public void setReconnectInterval(String reconnectInterval) {
 		this.reconnectInterval = reconnectInterval;
 	}
 
 	/**
 	 * @return the maxMessageSize
 	 */
-	public int getMaxMessageSize() {
+	public String getMaxMessageSize() {
 		return maxMessageSize;
 	}
 
@@ -455,14 +440,14 @@ public class KafkaEndpoint extends DefaultPollingEndpoint {
 	 * @param maxMessageSize
 	 *            the maxMessageSize to set
 	 */
-	public void setMaxMessageSize(int maxMessageSize) {
+	public void setMaxMessageSize(String maxMessageSize) {
 		this.maxMessageSize = maxMessageSize;
 	}
 
 	/**
 	 * @return the compressionCodec
 	 */
-	public int getCompressionCodec() {
+	public String getCompressionCodec() {
 		return compressionCodec;
 	}
 
@@ -470,7 +455,7 @@ public class KafkaEndpoint extends DefaultPollingEndpoint {
 	 * @param compressionCodec
 	 *            the compressionCodec to set
 	 */
-	public void setCompressionCodec(int compressionCodec) {
+	public void setCompressionCodec(String compressionCodec) {
 		this.compressionCodec = compressionCodec;
 	}
 
@@ -492,7 +477,7 @@ public class KafkaEndpoint extends DefaultPollingEndpoint {
 	/**
 	 * @return the zkReadNumRetries
 	 */
-	public int getZkReadNumRetries() {
+	public String getZkReadNumRetries() {
 		return zkReadNumRetries;
 	}
 
@@ -500,14 +485,14 @@ public class KafkaEndpoint extends DefaultPollingEndpoint {
 	 * @param zkReadNumRetries
 	 *            the zkReadNumRetries to set
 	 */
-	public void setZkReadNumRetries(int zkReadNumRetries) {
+	public void setZkReadNumRetries(String zkReadNumRetries) {
 		this.zkReadNumRetries = zkReadNumRetries;
 	}
 
 	/**
 	 * @return the queueTime
 	 */
-	public int getQueueTime() {
+	public String getQueueTime() {
 		return queueTime;
 	}
 
@@ -515,14 +500,14 @@ public class KafkaEndpoint extends DefaultPollingEndpoint {
 	 * @param queueTime
 	 *            the queueTime to set
 	 */
-	public void setQueueTime(int queueTime) {
+	public void setQueueTime(String queueTime) {
 		this.queueTime = queueTime;
 	}
 
 	/**
 	 * @return the queueSize
 	 */
-	public int getQueueSize() {
+	public String getQueueSize() {
 		return queueSize;
 	}
 
@@ -530,14 +515,14 @@ public class KafkaEndpoint extends DefaultPollingEndpoint {
 	 * @param queueSize
 	 *            the queueSize to set
 	 */
-	public void setQueueSize(int queueSize) {
+	public void setQueueSize(String queueSize) {
 		this.queueSize = queueSize;
 	}
 
 	/**
 	 * @return the batchSize
 	 */
-	public int getBatchSize() {
+	public String getBatchSize() {
 		return batchSize;
 	}
 
@@ -545,7 +530,7 @@ public class KafkaEndpoint extends DefaultPollingEndpoint {
 	 * @param batchSize
 	 *            the batchSize to set
 	 */
-	public void setBatchSize(int batchSize) {
+	public void setBatchSize(String batchSize) {
 		this.batchSize = batchSize;
 	}
 
@@ -607,6 +592,21 @@ public class KafkaEndpoint extends DefaultPollingEndpoint {
 	 */
 	public void setCallbackHandlerProps(String callbackHandlerProps) {
 		this.callbackHandlerProps = callbackHandlerProps;
+	}
+
+	/**
+	 * @return the autocommitEnable
+	 */
+	public String getAutocommitEnable() {
+		return autocommitEnable;
+	}
+
+	/**
+	 * @param autocommitEnable
+	 *            the autocommitEnable to set
+	 */
+	public void setAutocommitEnable(String autocommitEnable) {
+		this.autocommitEnable = autocommitEnable;
 	}
 
 }

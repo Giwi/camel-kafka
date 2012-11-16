@@ -34,8 +34,12 @@ public class KafkaProducer extends DefaultProducer {
 		this.endpoint = endpoint;
 		final Properties props = new Properties();
 		props.put("zk.connect", endpoint.getZkConnect());
-		props.put("serializer.class", Class.forName(endpoint.getSerializerClass()));
-		props.put("partitioner.class", Class.forName(endpoint.getPartitionerClass()));
+		if (!"".equals(endpoint.getSerializerClass())) {
+			props.put("serializer.class", endpoint.getSerializerClass());
+		}
+		if (!"".equals(endpoint.getPartitionerClass())) {
+			props.put("partitioner.class", endpoint.getPartitionerClass());
+		}
 		props.put("producer.type", endpoint.getProducerType());
 		props.put("broker.list", endpoint.getBrokerList());
 		props.put("buffer.size", endpoint.getBufferSize());
@@ -51,9 +55,13 @@ public class KafkaProducer extends DefaultProducer {
 			props.put("queue.time", endpoint.getQueueTime());
 			props.put("queue.size", endpoint.getQueueSize());
 			props.put("batch.size", endpoint.getBatchSize());
-			props.put("event.handler", Class.forName(endpoint.getEventHandler()));
+			if (!"".equals(endpoint.getEventHandler())) {
+				props.put("event.handler", endpoint.getEventHandler());
+			}
 			props.put("event.handler.props", endpoint.getEventHandlerProps());
-			props.put("callback.handler", Class.forName(endpoint.getCallbackHandler()));
+			if (!"".equals(endpoint.getCallbackHandler())) {
+				props.put("callback.handler", endpoint.getCallbackHandler());
+			}
 			props.put("callback.handler.props", endpoint.getCallbackHandlerProps());
 		}
 
