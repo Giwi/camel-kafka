@@ -39,6 +39,19 @@ public class KafkaConsumer extends DefaultConsumer {
 		final Properties props = new Properties();
 		props.put("zk.connect", endpoint.getZkConnect());
 		props.put("groupid", endpoint.getGroupId());
+		props.put("socket.timeout.ms", endpoint.getSocketTimeoutMs());
+		props.put("socket.buffersize", endpoint.getSocketBuffersize());
+		props.put("fetch.size", endpoint.getFetchSize());
+		props.put("backoff.increment.ms", endpoint.getBackoffIncrementMs());
+		props.put("queuedchunks.max", endpoint.getQueuedchunksMax());
+		props.put("autocommit.enable", endpoint.isAutocommitEnable());
+		props.put("autocommit.interval.ms", endpoint.getAutocommitIntervalMs());
+		props.put("autooffset.reset", endpoint.getAutooffsetReset());
+		props.put("consumer.timeout.ms", endpoint.getConsumerTimeoutMs());
+		props.put("rebalance.retries.max", endpoint.getRebalanceRetriesMax());
+		props.put("mirror.topics.whitelist", endpoint.getMirrorTopicsWhitelist());
+		props.put("mirror.topics.blacklist", endpoint.getMirrorTopicsBlacklist());
+		props.put("mirror.consumer.numthreads", endpoint.getMirrorConsumerNumthreads());
 
 		final ConsumerConfig config = new ConsumerConfig(props);
 		final ConsumerConnector connector = Consumer.createJavaConsumerConnector(config);

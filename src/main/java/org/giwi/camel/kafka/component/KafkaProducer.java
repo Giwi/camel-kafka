@@ -27,16 +27,35 @@ public class KafkaProducer extends DefaultProducer {
 
 	/**
 	 * @param endpoint
+	 * @throws ClassNotFoundException
 	 */
-	public KafkaProducer(final KafkaEndpoint endpoint) {
+	public KafkaProducer(final KafkaEndpoint endpoint) throws ClassNotFoundException {
 		super(endpoint);
 		this.endpoint = endpoint;
 		final Properties props = new Properties();
 		props.put("zk.connect", endpoint.getZkConnect());
-		props.put("producer.type", "async");
-		props.put("compression.codec", "2");
-		// TODO: Accept all kafka parameters
-		// final Map<String, Object> params = ((KafkaComponent) endpoint.getComponent()).getParameters();
+		props.put("serializer.class", Class.forName(endpoint.getSerializerClass()));
+		props.put("partitioner.class", Class.forName(endpoint.getPartitionerClass()));
+		props.put("producer.type", endpoint.getProducerType());
+		props.put("broker.list", endpoint.getBrokerList());
+		props.put("buffer.size", endpoint.getBufferSize());
+		props.put("connect.timeout.ms", endpoint.getConnectTimeoutMs());
+		props.put("socket.timeout.ms", endpoint.getSocketTimeoutMs());
+		props.put("reconnect.interval", endpoint.getReconnectInterval());
+		props.put("max.message.size", endpoint.getMaxMessageSize());
+		props.put("compression.codec", endpoint.getCompressionCodec());
+		props.put("compressed.topics", endpoint.getCompressedTopics());
+		props.put("zk.read.num.retries", endpoint.getZkReadNumRetries());
+		// producer.type=async
+		if ("async".equals(endpoint.getProducerType())) {
+			props.put("queue.time", endpoint.getQueueTime());
+			props.put("queue.size", endpoint.getQueueSize());
+			props.put("batch.size", endpoint.getBatchSize());
+			props.put("event.handler", Class.forName(endpoint.getEventHandler()));
+			props.put("event.handler.props", endpoint.getEventHandlerProps());
+			props.put("callback.handler", Class.forName(endpoint.getCallbackHandler()));
+			props.put("callback.handler.props", endpoint.getCallbackHandlerProps());
+		}
 
 		final ProducerConfig config = new ProducerConfig(props);
 		producer = new kafka.javaapi.producer.Producer<String, Message>(config);
@@ -71,6 +90,7 @@ public class KafkaProducer extends DefaultProducer {
 	 * (non-Javadoc)
 	 * @see org.apache.camel.Processor#process(org.apache.camel.Exchange)
 	 */
+	@Override
 	@SuppressWarnings("unchecked")
 	public void process(final Exchange exchange) throws Exception {
 		String topicName;
