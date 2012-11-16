@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>camel-kafka</groupId>
 	<artifactId>camel-kafka</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>0.0.2-SNAPSHOT</version>
 	<name>camel-kafka</name>
 	<url>https://github.com/BreizhBeans/camel-kafka</url>
 	<description>It aims to be a Camel component for accessing the Kafka messaging system.</description>
