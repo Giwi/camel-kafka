@@ -63,8 +63,8 @@ public class KafkaConsumer extends DefaultConsumer {
 			}
 		};
 		streams = connector.createMessageStreams(topicmap).get(topic);
-		if (LOG.isDebugEnabled()) {
-			LOG.debug("Kafka Consumer Component initialized");
+		if (LOG.isInfoEnabled()) {
+			LOG.info("Kafka Consumer Component initialized");
 		}
 	}
 
@@ -75,11 +75,10 @@ public class KafkaConsumer extends DefaultConsumer {
 	@Override
 	protected void doStart() throws Exception {
 		super.doStart();
-		if (LOG.isDebugEnabled()) {
-			LOG.debug("Kafka Consumer Component started");
+		if (LOG.isInfoEnabled()) {
+			LOG.info("Kafka Consumer Component started");
 		}
-		// TODO find a better way
-		executor = endpoint.getCamelContext().getExecutorServiceStrategy().newFixedThreadPool(this, endpoint.getEndpointUri(), endpoint.getConcurrentConsumers());
+		executor = endpoint.getCamelContext().getExecutorServiceManager().newFixedThreadPool(this, endpoint.getEndpointUri(), endpoint.getConcurrentConsumers());
 		// consume the messages in the threads
 		for (final KafkaStream<Message> stream : streams) {
 			final Klistener kl = new Klistener();
@@ -96,14 +95,11 @@ public class KafkaConsumer extends DefaultConsumer {
 	 */
 	@Override
 	protected void doStop() throws Exception {
-		// TODO find a better way
-		endpoint.getCamelContext().getExecutorServiceStrategy().shutdownNow(executor);
-		executor = null;
-		if (LOG.isDebugEnabled()) {
-			LOG.debug("Kafka Consumer Component stoped");
-		}
 		super.doStop();
-
+		executor.shutdown();
+		if (LOG.isInfoEnabled()) {
+			LOG.info("Kafka Consumer Component stoped");
+		}
 	}
 
 }

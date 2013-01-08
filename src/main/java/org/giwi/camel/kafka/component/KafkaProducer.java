@@ -66,6 +66,9 @@ public class KafkaProducer extends DefaultProducer {
 		}
 
 		final ProducerConfig config = new ProducerConfig(props);
+		if (LOG.isInfoEnabled()) {
+			LOG.info("Kafka producer Component initialized");
+		}
 		producer = new kafka.javaapi.producer.Producer<String, Message>(config);
 	}
 
@@ -76,8 +79,8 @@ public class KafkaProducer extends DefaultProducer {
 	@Override
 	protected void doStart() throws Exception {
 		super.doStart();
-		if (LOG.isDebugEnabled()) {
-			LOG.debug("Kafka Producer Component started");
+		if (LOG.isInfoEnabled()) {
+			LOG.info("Kafka Producer Component started");
 		}
 	}
 
@@ -89,8 +92,8 @@ public class KafkaProducer extends DefaultProducer {
 	protected void doStop() throws Exception {
 		super.doStop();
 		producer.close();
-		if (LOG.isDebugEnabled()) {
-			LOG.debug("Kafka Producer Component stoped");
+		if (LOG.isInfoEnabled()) {
+			LOG.info("Kafka Producer Component stoped");
 		}
 	}
 
@@ -107,24 +110,24 @@ public class KafkaProducer extends DefaultProducer {
 		} else {
 			topicName = endpoint.getTopicName();
 		}
-		final Object evt = exchange.getIn().getBody();
-		if (evt != null) {
-			final ProducerData<String, Message> data = new ProducerData<String, Message>(topicName, new Message(BinaryHelper.getInstance().getBytes(evt)));
-			producer.send(data);
-			if (LOG.isDebugEnabled()) {
-				LOG.debug("Kafka Producer send : " + evt);
+		final List<Object> evts = exchange.getIn().getBody(List.class);
+		if (evts != null) {
+			final List<ProducerData<String, Message>> datas = new ArrayList<ProducerData<String, Message>>();
+			for (final Object obj : evts) {
+				final ProducerData<String, Message> data = new ProducerData<String, Message>(topicName, new Message(BinaryHelper.getInstance().getBytes(obj)));
+				datas.add(data);
+			}
+			producer.send(datas);
+			if (LOG.isInfoEnabled()) {
+				LOG.info("Kafka Producer multiple send : " + evts);
 			}
 		} else {
-			final List<Object> evts = exchange.getIn().getBody(List.class);
-			if (evts != null) {
-				final List<ProducerData<String, Message>> datas = new ArrayList<ProducerData<String, Message>>();
-				for (final Object obj : evts) {
-					final ProducerData<String, Message> data = new ProducerData<String, Message>(topicName, new Message(BinaryHelper.getInstance().getBytes(obj)));
-					datas.add(data);
-				}
-				producer.send(datas);
-				if (LOG.isDebugEnabled()) {
-					LOG.debug("Kafka Producer multiple send : " + evts);
+			final Object evt = exchange.getIn().getBody();
+			if (evt != null) {
+				final ProducerData<String, Message> data = new ProducerData<String, Message>(topicName, new Message(BinaryHelper.getInstance().getBytes(evt)));
+				producer.send(data);
+				if (LOG.isInfoEnabled()) {
+					LOG.info("Kafka Producer send : " + evt);
 				}
 			}
 		}

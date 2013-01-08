@@ -13,7 +13,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * @author b3605
+ * @author Giwi Softwares
  * 
  */
 public class Klistener implements Runnable {
@@ -27,6 +27,7 @@ public class Klistener implements Runnable {
 	 * (non-Javadoc)
 	 * @see java.lang.Runnable#run()
 	 */
+	@Override
 	public void run() {
 		for (final MessageAndMetadata<Message> message : stream) {
 			final Exchange exchange = endpoint.createExchange();
@@ -35,8 +36,8 @@ public class Klistener implements Runnable {
 			try {
 				final Object evt = BinaryHelper.getInstance().getObject(bytes);
 				exchange.getIn().setBody(evt);
-				if (LOG.isDebugEnabled()) {
-					LOG.debug("Kafka Consumer Message recieved : " + evt);
+				if (LOG.isInfoEnabled()) {
+					LOG.info("Kafka Consumer Message recieved : " + evt);
 				}
 				consumer.getProcessor().process(exchange);
 			} catch (final Exception e) {
