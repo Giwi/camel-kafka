@@ -36,6 +36,7 @@ public class KafkaConsumer extends DefaultConsumer {
 	private final List<KafkaStream<Message>> streams;
 	private final KafkaEndpoint endpoint;
 	private static final Logger LOG = LoggerFactory.getLogger(KafkaConsumer.class);
+	private final ConsumerConnector connector;
 
 	/**
 	 * @param endpoint
@@ -64,7 +65,7 @@ public class KafkaConsumer extends DefaultConsumer {
 		props.put("mirror.consumer.numthreads", endpoint.getMirrorConsumerNumthreads());
 
 		final ConsumerConfig config = new ConsumerConfig(props);
-		final ConsumerConnector connector = Consumer.createJavaConsumerConnector(config);
+		connector = Consumer.createJavaConsumerConnector(config);
 
 		final Map<String, Integer> topicmap = new HashMap<String, Integer>() {
 			private static final long serialVersionUID = 1L;
@@ -80,6 +81,7 @@ public class KafkaConsumer extends DefaultConsumer {
 
 	/*
 	 * (non-Javadoc)
+	 * 
 	 * @see org.apache.camel.impl.DefaultConsumer#doStart()
 	 */
 	@Override
@@ -90,23 +92,29 @@ public class KafkaConsumer extends DefaultConsumer {
 		}
 		executor = endpoint.getCamelContext().getExecutorServiceManager().newFixedThreadPool(this, endpoint.getEndpointUri(), endpoint.getConcurrentConsumers());
 		// consume the messages in the threads
-		for (final KafkaStream<Message> stream : streams) {
-			final Klistener kl = new Klistener();
-			kl.setConsumer(this);
-			kl.setStream(stream);
-			kl.setEndpoint(endpoint);
-			executor.submit(kl);
+		if (!executor.isShutdown()) {
+			for (final KafkaStream<Message> stream : streams) {
+				final Klistener kl = new Klistener();
+				kl.setConsumer(this);
+				kl.setStream(stream);
+				kl.setEndpoint(endpoint);
+				executor.submit(kl);
+			}
 		}
 	}
 
 	/*
 	 * (non-Javadoc)
+	 * 
 	 * @see org.apache.camel.impl.DefaultConsumer#doStop()
 	 */
 	@Override
 	protected void doStop() throws Exception {
 		super.doStop();
-		executor.shutdown();
+		if (connector != null) {
+			connector.commitOffsets();
+			connector.shutdown();
+		}
 		if (LOG.isInfoEnabled()) {
 			LOG.info("Kafka Consumer Component stoped");
 		}
