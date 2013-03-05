@@ -4,7 +4,7 @@
 	<artifactId>camel-kafka</artifactId>
 	<version>0.0.2-SNAPSHOT</version>
 	<name>camel-kafka</name>
-	<url>https://github.com/BreizhBeans/camel-kafka</url>
+	<url>http://breizhbeans.github.com/camel-kafka/</url>
 	<description>It aims to be a Camel component for accessing the Kafka messaging system.</description>
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
