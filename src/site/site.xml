@@ -14,10 +14,9 @@
 	<body>
 		<breadcrumbs>
 			<item name="Blog" href="http://giwi.free.fr" target="_blank" />
-			<item name="Giwi Softwares projects" href="../index.html" />
 		</breadcrumbs>
 		<menu name="Giwi Softwares projects">
-			<item name="Description" href="../index.html" />
+			<item name="Home page" href="http://giwi.free.fr/?page_id=439" />
 		</menu>
 		<menu name="Overview">
 			<item name="Description" href="index.html" collapse="true" />
