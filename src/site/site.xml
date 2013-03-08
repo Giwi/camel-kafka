@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<project xmlns="http://maven.apache.org/DECORATION/1.3.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/DECORATION/1.3.0 http://maven.apache.org/xsd/decoration-1.3.0.xsd" name="camel-kafka">
+	<skin>
+		<groupId>org.apache.maven.skins</groupId>
+		<artifactId>maven-fluido-skin</artifactId>
+		<version>1.3.0</version>
+	</skin>
+	<bannerLeft>
+		<name>Giwi Softwares</name>
+		<src>http://giwi.free.fr/wp-content/themes/monochrome/img/logo_96.png</src>
+		<href>http://giwi.free.fr</href>
+	</bannerLeft>
+
+	<body>
+		<breadcrumbs>
+			<item name="Blog" href="http://giwi.free.fr" target="_blank" />
+			<item name="Giwi Softwares projects" href="../index.html" />
+		</breadcrumbs>
+		<menu name="Giwi Softwares projects">
+			<item name="Description" href="../index.html" />
+		</menu>
+		<menu name="Overview">
+			<item name="Description" href="index.html" collapse="true" />
+			<item name="Quickstart" href="quickstart.html" />
+			<item name="Usage" href="usage.html" />
+		</menu>
+		<menu ref="reports" />
+	</body>
+	<custom>
+		<fluidoSkin>
+			<sourceLineNumbersEnabled>true</sourceLineNumbersEnabled>
+			<gitHub>
+				<projectId>BreizhBeans/camel-kafka</projectId>
+				<ribbonOrientation>right</ribbonOrientation>
+				<ribbonColor>black</ribbonColor>
+			</gitHub>
+			<googlePlusOne />
+			<twitter>
+				<user>XavMarin</user>
+				<showUser>true</showUser>
+				<showFollowers>true</showFollowers>
+			</twitter>
+		</fluidoSkin>
+	</custom>
+</project>

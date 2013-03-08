@@ -29,6 +29,12 @@
 			</plugin>
 		</plugins>
 	</build>
+	<distributionManagement>
+		<site>
+			<id>apache-kafka-site</id>
+			<url>file:/home/xavier/giwi/camel-kafka</url>
+		</site>
+	</distributionManagement>
 	<reporting>
 		<plugins>
 			<plugin>

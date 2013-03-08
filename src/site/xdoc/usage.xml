@@ -1,0 +1,495 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document>
+	<properties>
+		<author>Giwi Softwares</author>
+		<title>Usage</title>
+	</properties>
+	<meta name="keyword" content="camel, kafka, apache, java" />
+	<body>
+		<section name="Usage">
+			<subsection name="URI format">
+				<source>kafka:topicName[?options]</source>
+			</subsection>
+
+			<subsection name="Dependencies">
+				<p>
+					Maven users will need to add the
+					<a href="dependencies.html" target="_blank">dependencies</a>
+					to their pom.xml for this component.
+				</p>
+				<p>
+					You'll also need
+					<a href="http://incubator.apache.org/kafka/downloads.html" target="_blank">kafka-0.7.2.jar</a>
+					and of course the most exciting component : camel-kafka.
+				</p>
+
+			</subsection>
+
+			<subsection name="Options">
+				<subsection name="Producer">
+					<table>
+						<thead>
+							<tr>
+								<th>Property</th>
+								<th>Default</th>
+								<th>Description</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td>
+									<tt>zkConnect</tt>
+								</td>
+								<td></td>
+								<td> For using the zookeeper based automatic broker discovery, use this config to pass in the zookeeper connection url to the zookeeper cluster where the Kafka brokers are registered. ie : localhost:2181</td>
+							</tr>
+							<tr>
+								<td>
+									<code>serializerClass</code>
+								</td>
+								<td>kafka.serializer.DefaultEncoder. This is a no-op encoder. The serialization of data to Message should be handled outside the Producer</td>
+								<td>
+									class that implements the
+									<code>kafka.serializer.Encoder&lt;T&gt;</code>
+									interface, used to encode data of type T into a Kafka message
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<code>partitionerClass</code>
+								</td>
+								<td>
+									<code>kafka.producer.DefaultPartitioner&lt;T&gt;</code>
+									- uses the partitioning strategy
+									<code>hash(key)%num_partitions</code>
+									. If key is null, then it picks a random partition.
+								</td>
+								<td>
+									class that implements the
+									<code>kafka.producer.Partitioner&lt;K&gt;</code>
+									, used to supply a custom partitioning strategy on the message key (of type K) that is specified through the
+									<code>ProducerData&lt;K, T&gt;</code>
+									object in the
+									<code>kafka.producer.Producer&lt;T&gt;</code>
+									send API
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<code>producerType</code>
+								</td>
+								<td>sync</td>
+								<td>
+									this parameter specifies whether the messages are sent asynchronously or not. Valid values are -
+									<ul>
+										<li>
+											<code>async</code>
+											for asynchronous batching send through
+											<code>kafka.producer.AyncProducer</code>
+										</li>
+										<li>
+											<code>sync</code>
+											for synchronous send through
+											<code>kafka.producer.SyncProducer</code>
+										</li>
+									</ul>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<code>brokerList</code>
+								</td>
+								<td>null. Either this parameter or zk.connect needs to be specified by the user.</td>
+								<td>
+									For bypassing zookeeper based auto partition discovery, use this config to pass in static broker and per-broker partition information. Format-
+									<code>brokerid1:host1:port1, brokerid2:host2:port2.</code>
+									If you use this option, the
+									<code>partitioner.class</code>
+									will be ignored and each producer request will be routed to a random broker partition.
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<code>bufferSize</code>
+								</td>
+								<td>102400</td>
+								<td>the socket buffer size, in bytes</td>
+							</tr>
+							<tr>
+								<td>
+									<code>connectTimeoutMs</code>
+								</td>
+								<td>5000</td>
+								<td>
+									the maximum time spent by
+									<code>kafka.producer.SyncProducer</code>
+									trying to connect to the kafka broker. Once it elapses, the producer throws an ERROR and stops.
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<code>socketTimeoutMs</code>
+								</td>
+								<td>30000</td>
+								<td>The socket timeout in milliseconds</td>
+							</tr>
+							<tr>
+								<td>
+									<code>reconnectInterval</code>
+								</td>
+								<td>30000</td>
+								<td>
+									the number of produce requests after which
+									<code>kafka.producer.SyncProducer</code>
+									tears down the socket connection to the broker and establishes it again
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<code>maxMessageSize</code>
+								</td>
+								<td>1000000</td>
+								<td>the maximum number of bytes that the kafka.producer.SyncProducer can send as a single message payload</td>
+							</tr>
+							<tr>
+								<td>
+									<code>compressioncodec</code>
+								</td>
+								<td>0 (No compression)</td>
+								<td>This parameter allows you to specify the compression codec for all data generated by this producer.</td>
+							</tr>
+							<tr>
+								<td>
+									<code>compressedtopics</code>
+								</td>
+								<td>null</td>
+								<td>This parameter allows you to set whether compression should be turned on for particular topics. If the compression codec is anything other than NoCompressionCodec, enable compression only for specified topics if any. If the list of compressed topics is empty, then enable the specified
+									compression codec for all topics. If the compression codec is NoCompressionCodec, compression is disabled for all topics.
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<code>zkReadNumretries</code>
+								</td>
+								<td>3</td>
+								<td>The producer using the zookeeper software load balancer maintains a ZK cache that gets updated by the zookeeper watcher listeners. During some events like a broker bounce, the producer ZK cache can get into an inconsistent state, for a small time period. In this time period, it could end
+									up picking a broker partition that is unavailable. When this happens, the ZK cache needs to be updated. This parameter specifies the number of times the producer attempts to refresh this ZK cache.
+								</td>
+							</tr>
+							<tr>
+								<td colspan="3" style="text-align: center">
+									Options for Asynchronous Producers (
+									<code>producer.type=async</code>
+									)
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<code>queueTime</code>
+								</td>
+								<td>5000</td>
+								<td>
+									maximum time, in milliseconds, for buffering data on the producer queue. After it elapses, the buffered data in the producer queue is dispatched to the
+									<code>event.handler</code>
+									.
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<code>queueSize</code>
+								</td>
+								<td>10000</td>
+								<td>
+									the maximum size of the blocking queue for buffering on the
+									<code> kafka.producer.AsyncProducer</code>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<code>batchSize</code>
+								</td>
+								<td>200</td>
+								<td>
+									the number of messages batched at the producer, before being dispatched to the
+									<code>event.handler</code>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<code>eventHandler</code>
+								</td>
+								<td>
+									<code>kafka.producer.async.EventHandler&lt;T&gt;</code>
+								</td>
+								<td>
+									the class that implements
+									<code>kafka.producer.async.IEventHandler&lt;T&gt;</code>
+									used to dispatch a batch of produce requests, using an instance of
+									<code>kafka.producer.SyncProducer</code>
+									.
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<code>eventHandlerProps</code>
+								</td>
+								<td>null</td>
+								<td>
+									the
+									<code>java.util.Properties()</code>
+									object used to initialize the custom
+									<code>event.handler</code>
+									through its
+									<code>init()</code>
+									API
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<code>callbackHandler</code>
+								</td>
+								<td>
+									<code>null</code>
+								</td>
+								<td>
+									the class that implements
+									<code>kafka.producer.async.CallbackHandler&lt;T&gt;</code>
+									used to inject callbacks at various stages of the
+									<code>kafka.producer.AsyncProducer</code>
+									pipeline.
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<code>callbackHandlerProps</code>
+								</td>
+								<td>null</td>
+								<td>
+									the
+									<code>java.util.Properties()</code>
+									object used to initialize the custom
+									<code>callback.handler</code>
+									through its
+									<code>init()</code>
+									API
+								</td>
+							</tr>
+						</tbody>
+					</table>
+
+					<p>
+						&gt;
+						<a href="http://incubator.apache.org/kafka/configuration.html" target="_blank">see here</a>
+					</p>
+
+				</subsection>
+
+				<subsection name="Consumer">
+					<table>
+						<thead>
+							<tr>
+								<th>Property</th>
+								<th>Default</th>
+								<th>Description</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td>
+									<tt>zkConnect</tt>
+								</td>
+								<td></td>
+								<td> For using the zookeeper based automatic broker discovery, use this config to pass in the zookeeper connection url to the zookeeper cluster where the Kafka brokers are registered. ie : localhost:2181</td>
+							</tr>
+							<tr>
+								<td>
+									<tt>groupId</tt>
+								</td>
+								<td></td>
+								<td> This is a string that uniquely identifies a set of consumers within the same consumer group. </td>
+							</tr>
+							<tr>
+								<td>
+									<tt>concurrentConsumers</tt>
+								</td>
+								<td>1</td>
+								<td> The number of concurrent threads that read the topic </td>
+							</tr>
+							<tr>
+								<td>
+									<code>socketTimeoutMs</code>
+								</td>
+								<td>30000</td>
+								<td>controls the socket timeout for network requests </td>
+							</tr>
+							<tr>
+								<td>
+									<code>socketBuffersize</code>
+								</td>
+								<td>64*1024</td>
+								<td>controls the socket receive buffer for network requests</td>
+							</tr>
+							<tr>
+								<td>
+									<code>fetchSize</code>
+								</td>
+								<td>300 * 1024</td>
+								<td>controls the number of bytes of messages to attempt to fetch in one request to the Kafka server</td>
+							</tr>
+							<tr>
+								<td>
+									<code>backoffIncrementMs</code>
+								</td>
+								<td>1000</td>
+								<td>This parameter avoids repeatedly polling a broker node which has no new data. We will backoff every time we get an empty set
+									from the broker for this time period
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<code>queuedchunksMax</code>
+								</td>
+								<td>100</td>
+								<td>the high level consumer buffers the messages fetched from the server internally in blocking queues. This parameter controls
+									the size of those queues
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<code>autocommitEnable</code>
+								</td>
+								<td>true</td>
+								<td>if set to true, the consumer periodically commits to zookeeper the latest consumed offset of each partition. </td>
+							</tr>
+							<tr>
+								<td>
+									<code>autocommitIntervalMs</code>
+								</td>
+								<td>10000</td>
+								<td>is the frequency that the consumed offsets are committed to zookeeper. </td>
+							</tr>
+							<tr>
+								<td>
+									<code>autooffsetReset</code>
+								</td>
+								<td>smallest</td>
+								<td>
+									<ul>
+										<li>
+											<code>smallest</code>
+											: automatically reset the offset to the smallest offset available on the broker.
+										</li>
+										<li>
+											<code>largest</code>
+											: automatically reset the offset to the largest offset available on the broker.
+										</li>
+										<li>
+											<code>anything else</code>
+											: throw an exception to the consumer.
+										</li>
+									</ul>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<code>consumerTimeoutMs</code>
+								</td>
+								<td>-1</td>
+								<td>By default, this value is -1 and a consumer blocks indefinitely if no new message is available for consumption. By setting the value to a positive integer, a timeout exception is thrown to the consumer if no message is available for consumption after the specified timeout value.</td>
+							</tr>
+							<tr>
+								<td>
+									<code>rebalanceRetriesMax</code>
+								</td>
+								<td>4</td>
+								<td>max number of retries during rebalance</td>
+							</tr>
+							<tr>
+								<td>
+									<code>mirrorTopicsWhitelist</code>
+								</td>
+								<td></td>
+								<td>Whitelist of topics for this mirror's embedded consumer to consume. At most one of whitelist/blacklist may be specified.</td>
+							</tr>
+							<tr>
+								<td>
+									<code>mirrorTopicsBlacklist</code>
+								</td>
+								<td></td>
+								<td>Topics to skip mirroring. At most one of whitelist/blacklist may be specified</td>
+							</tr>
+							<tr>
+								<td>
+									<code>mirrorConsumerNumthreads</code>
+								</td>
+								<td>4</td>
+								<td>The number of threads to be used per topic for the mirroring consumer, by default</td>
+							</tr>
+						</tbody>
+					</table>
+
+					<p>
+						&gt;
+						<a href="http://incubator.apache.org/kafka/configuration.html" target="_blank">see here</a>
+					</p>
+
+				</subsection>
+			</subsection>
+			<subsection name="Exchange data format">
+				<p>This component consume `T&lt;Serializable&gt;` or `List&lt;T&lt;Serializable&gt;&gt;`. It will produce only `T&lt;Serializable&gt;`.</p>
+			</subsection>
+			<subsection name="Message Headers">
+				<table>
+					<thead>
+						<tr>
+							<th>Property</th>
+							<th>Default</th>
+							<th>Description</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td>
+								<tt>topicNameHeader</tt>
+							</td>
+							<td></td>
+							<td> This is the name of the topic used by a producer, if present, it will override the topic name present in the uri.</td>
+						</tr>
+					</tbody>
+				</table>
+
+			</subsection>
+			<subsection name="Samples">
+				<subsection name="Single message">
+					<p>Here is an example of sending and reading a simple message to Kafka on a topic named "TOPIC-TEST" :</p>
+					<source><![CDATA[ 
+    public void configure() {
+        from("timer://foo?fixedRate=true&period=5000")
+            .setBody(constant("hello from Giwi Softwares"))
+            .to("kafka:TOPIC-TEST?zkConnect=localhost:2181");
+        
+        // Recieving
+        from("kafka:TOPIC-TEST?groupId=camelTest&zkConnect=localhost:2181").log("${body}");
+    }
+]]></source>
+				</subsection>
+				<subsection name="Multiple messages">
+					<p>You may want to deliver a bunch of messages in a single request :</p>
+					<source><![CDATA[ 
+    from("timer://foo?fixedRate=true&period=5000").process(new Processor() {
+        @Override
+        public void process(Exchange exchange) throws Exception {
+            List<Serializable> list = new ArrayList<Serializable>();
+            for (int i = 0; i < 100; i++) {
+                list.add("This my dummy message #" + i);
+            }
+            exchange.getIn().setBody(list);
+        }
+    }).to("kafka:TOPIC-TEST?zkConnect=localhost:2181");
+]]></source>
+				</subsection>
+			</subsection>
+		</section>
+	</body>
+
+</document>

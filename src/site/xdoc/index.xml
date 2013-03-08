@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document>
+	<properties>
+		<author>Giwi Softwares</author>
+		<title>Description</title>
+	</properties>
+	<meta name="keyword" content="camel, kafka, apache, java" />
+	<body>
+	    <section name="Camel-kafka">
+		<subsection name="Introduction">
+			<p>
+				Camel-kafka is an
+				<a href="http://camel.apache.org/" target="_blank">Apache Camel</a>
+				component designed to interact with the
+				<a href="http://incubator.apache.org/kafka" target="_blank">Apache Kafka</a>
+				messaging system.
+			</p>
+		</subsection>
+		<subsection name="Downloads">
+			<p>
+				<a href="https://github.com/BreizhBeans/camel-kafka/blob/1e84168647f19769e1b2938ecfccc9be65c4f4f8/target/camel-kafka-0.0.3-RC1.jar?raw=true" target="_blank">Release cadidate 1</a>
+			</p>
+		</subsection></section>
+	</body>
+</document>

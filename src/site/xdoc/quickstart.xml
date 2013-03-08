@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document>
+	<properties>
+		<author>Giwi Softwares</author>
+		<title>Quickstart</title>
+	</properties>
+	<meta name="keyword" content="camel, kafka, apache, java" />
+	<body>
+		<section name="Dependencies">
+			<p>
+				Please see
+				<a href="dependencies.html" target="_blank">dependencies</a>.
+			</p>
+		</section>
+		<section name="Kafka local installation">
+			<p>
+				Well this is the most complicated part, you have to follow this guide :
+				<a href="http://incubator.apache.org/kafka/quickstart" target="_blank">http://incubator.apache.org/kafka/quickstart</a>.
+			</p>
+			<p>That's all.</p>
+		</section>
+
+		<section name="Quick test">
+			<subsection name="MainApp.java">
+				<source><![CDATA[
+    package org.giwi.camel.kafka.test.KafkaTest;
+    import org.apache.camel.main.Main;
+    /**
+     * A Camel Application
+     */
+    public class MainApp {
+        /**
+         * A main() so we can easily run these routing rules in our IDE
+         */
+        public static void main(String... args) throws Exception {
+            Main main = new Main();
+            main.enableHangupSupport();
+            main.addRouteBuilder(new MyRouteBuilder());
+            main.run(args);
+            Thread.sleep(30000);
+        }
+    }
+]]></source>
+			</subsection>
+
+			<subsection name="MyRouteBuilder.java">
+				<source><![CDATA[
+    package org.giwi.camel.kafka.test.KafkaTest;
+    import org.apache.camel.builder.RouteBuilder;
+    /**
+     * A Camel Java DSL Router
+     */
+    public class MyRouteBuilder extends RouteBuilder {
+        /**
+         * Let's configure the Camel routing rules using Java code...
+         */
+        @Override
+        public void configure() {
+            from("timer://foo?fixedRate=true&period=5000")
+                .setBody(constant("hello from Giwi Softwares"))
+                .to("kafka:TOPIC-TEST?zkConnect=localhost:2181");
+            
+            // Recieving
+            from("kafka:TOPIC-TEST?groupId=camelTest&zkConnect=localhost:2181").log("${body}");
+        }
+    }
+
+]]></source>
+			</subsection>
+		</section>
+	</body>
+</document>
