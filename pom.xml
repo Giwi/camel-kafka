@@ -6,6 +6,12 @@
 	<name>camel-kafka</name>
 	<url>http://breizhbeans.github.com/camel-kafka/</url>
 	<description>It aims to be a Camel component for accessing the Kafka messaging system.</description>
+	<licenses>
+		<license>
+			<name>Licensed to the Apache Software Foundation (ASF)</name>
+			<url>http://www.apache.org/licenses/LICENSE-2.0</url>
+		</license>
+	</licenses>
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
